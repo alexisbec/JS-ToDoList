@@ -1,0 +1,25 @@
+{
+  "name": "js-todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "qa": "webpack --mode qa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexisbec/JS-ToDoList.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexisbec/JS-ToDoList/issues"
+  },
+  "homepage": "https://github.com/alexisbec/JS-ToDoList#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
