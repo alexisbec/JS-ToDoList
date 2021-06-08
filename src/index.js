@@ -1,14 +1,24 @@
 const projects = [];
+const tasks = [];
 
-class Projects {
-  constructor(title, description, dueDate, priority) {
+class Tasks {
+  constructor(title, description, dueDate, priority, project = "default") {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.project = project;
   };
 
-  addProject() {
-    
-  }
-}
+  addTask(task) {
+    tasks.push(task);
+  };
+
+  addTaskToProject(task) {
+
+  };
+
+  deleteTask(task) {
+
+  };
+};
