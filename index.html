@@ -17,33 +17,72 @@
     <div class="row">
       <div class="col-4">
         <div class="border border-info border-3 rounded p-4 mx-3">
-          <h3 class="text-info ">Projects</h3>
-          <ul class="list-group pt-4">
-            <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-            <li class="list-group-item">And a fifth one</li>
-            <li class="list-group-item">And a fifth one</li>
+          <h3 class="text-info">Projects</h3>
+          <ul class="list-group pt-4 bg-dark">
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
           </ul>
-          <button type="button" class="btn btn-info mt-4">Add Project</button>
+          <div>
+            <p>
+              <button type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Add Project</button>
+            </p>
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label text-info">Project</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label text-info">Description</label>
+                  <input type="text" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-info">Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="col-8">
         <div class="todos border border-info border-3 rounded p-4 mx-3">
-          <h3 class="text-info tasks">Tasks</h3>
+          <h3 class="text-info">Tasks</h3>
           <ul class="list-group pt-4">
-            <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-            <li class="list-group-item">And a fifth one</li>
-            <li class="list-group-item">And a fifth one</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
+            <li class="list-group-item list-group-item-dark">List Element</li>
           </ul>
-          <button type="button" class="btn btn-info mt-4">Add Task</button>
+          <div>
+            <p>
+              <button class="btn btn-info mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Add Task</button>
+            </p>
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label text-info">Task</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label text-info">Description</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label text-info">Priority</label>
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>Select Priority</option>
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-info">Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
