@@ -36,12 +36,12 @@ PROJECT_BTN.addEventListener('click', () => {
   const PROJECT_LIST = document.querySelector("#project-list");
 
   PROJECT_LIST.innerHTML = `
-      <li class="list-group-item list-group-item-dark">Default Project</li>
+      <li class="list-group-item list-group-item-dark" id="project-list">Default Project</li>
   `;
 
   for (let i = 0; i < projects.length; i++) {
     PROJECT_LIST.innerHTML += `
-      <li class="list-group-item list-group-item-dark">${projects[i].title}</li>
+      <li class="list-group-item list-group-item-dark" id="project-list">${projects[i].title}</li>
     `;
   }
 })
@@ -71,7 +71,24 @@ TASK_BTN.addEventListener('click', () => {
     TASKS_LIST.innerHTML += `
       <li class="list-group-item list-group-item-dark">${tasks[i].title}</li>
     `;
-    console.log(tasks[i].dueDate);
+  }
+
+  const TASK_PROJECT = document.querySelector('#task-project');
+  for(let i = 0; i < projects.length; i++) {
+    TASK_PROJECT.innerHTML += `
+    <option value="${projects[i].title}">${projects[i].title}</li>
+    `;
   }
 })
+
+const PROJECT_LIST = document.querySelector('#project-list');
+
+PROJECT_LIST.addEventListener('click', (e) => {
+  const PROJECT_NAME = e.target.textContent;
+
+  const TASK_DISPLAY = document.querySelector('#task-display');
+  TASK_DISPLAY.classList.remove('d-none');
+
+  return PROJECT_NAME;
+});
 
