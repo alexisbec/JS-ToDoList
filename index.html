@@ -18,7 +18,7 @@
       <div class="col-4">
         <div class="border border-info border-3 rounded p-4 mx-3">
           <h3 class="text-info">Projects</h3>
-          <ul class="list-group pt-4 bg-dark">
+          <ul id="project-list" class="list-group pt-4 bg-dark">
             <li class="list-group-item list-group-item-dark">List Element</li>
             <li class="list-group-item list-group-item-dark">List Element</li>
             <li class="list-group-item list-group-item-dark">List Element</li>
@@ -30,16 +30,17 @@
               <button type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Add Project</button>
             </p>
             <div class="collapse multi-collapse" id="multiCollapseExample1">
-              <form>
+              <form id="project-form">
                 <div class="mb-3">
-                  <label class="form-label text-info">Project</label>
-                  <input type="text" class="form-control">
+                  <label for="project-title" class="form-label text-info">Project's Title</label>
+                  <input type="text" class="form-control" id="project-title" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
-                  <label class="form-label text-info">Description</label>
-                  <input type="text" class="form-control">
+                  <label for="project-description" class="form-label text-info">Project's Description</label>
+                  <input type="text" class="form-control" id="project-description">
                 </div>
-                <button type="submit" class="btn btn-info">Submit</button>
+
+                <button id="project-btn" type="submit" class="btn btn-primary">Create Project</button>
               </form>
             </div>
           </div>
@@ -49,7 +50,7 @@
       <div class="col-8">
         <div class="todos border border-info border-3 rounded p-4 mx-3">
           <h3 class="text-info">Tasks</h3>
-          <ul class="list-group pt-4">
+          <ul id="tasks-list" class="list-group pt-4">
             <li class="list-group-item list-group-item-dark">List Element</li>
             <li class="list-group-item list-group-item-dark">List Element</li>
             <li class="list-group-item list-group-item-dark">List Element</li>
@@ -61,25 +62,33 @@
               <button class="btn btn-info mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Add Task</button>
             </p>
             <div class="collapse multi-collapse" id="multiCollapseExample2">
-              <form>
+              <form id="tasks-form">
                 <div class="mb-3">
-                  <label class="form-label text-info">Task</label>
-                  <input type="text" class="form-control">
+                  <label for="task-name" class="form-label text-info">Task Title</label>
+                  <input type="text" class="form-control" id="task-name">
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label text-info">Description</label>
-                  <input type="text" class="form-control">
+                  <label for="task-description" class="form-label text-info">Task Description</label>
+                  <input type="text" class="form-control" id="task-description">
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label text-info">Priority</label>
-                  <select class="form-select" aria-label="Default select example">
+                  <label for="task-date" class="form-label text-info">Due Date</label>
+                  <br>
+                  <input type="date" id="task-date" name="trip-start">
+                </div>
+
+                <div class="mb-3">
+                  <label for="task-priority" class="form-label text-info">Priority</label>
+                  <select id="task-priority" class="form-select" aria-label="Default select example">
                     <option selected>Select Priority</option>
-                    <option value="1">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="3">High</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-info">Submit</button>
+                <button id="task-btn" type="submit" class="btn btn-info">Submit</button>
               </form>
             </div>
           </div>
