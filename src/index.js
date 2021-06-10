@@ -1,45 +1,28 @@
-const projects = [
-    /*
-    {
-      title: "Project 1",
-      Description: "Project 1 description"
-    },
-    {
-      title: "Project 2",
-      Description: "Project 2 description"
-    },
-    {
-      title: "Project 3",
-      Description: "Project 3 description"
-    }
-     */
-];
+const projects = [];
+
 const tasks = [
-    {
-      title: "Task 1",
-      description: "Description 1",
-      dueDate: "2021-06-10",
-      priority: "Low",
-      project: "Project 1"
-    },
-    {
-      title: "Task 2",
-      description: "Description 2",
-      dueDate: "2021-06-10",
-      priority: "Medium",
-      project: "Project 2"
-    },
-    {
-      title: "Task 3",
-      description: "Description 3",
-      dueDate: "2021-06-10",
-      priority: "Medium",
-      project: "Project 3"
-    }
-  ];
+  {
+    title: "Task 1",
+    description: "Description 1",
+    dueDate: "2021-06-10",
+    priority: "Low"
+  },
+  {
+    title: "Task 2",
+    description: "Description 2",
+    dueDate: "2021-06-10",
+    priority: "Medium"
+  },
+  {
+    title: "Task 3",
+    description: "Description 3",
+    dueDate: "2021-06-10",
+    priority: "Medium"
+  }
+];
 
 class Task {
-  constructor(title, description, dueDate, priority, project = "default") {
+  constructor(title, description, dueDate, priority, project = "All Tasks") {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
@@ -61,11 +44,19 @@ const PROJECT_FORM = document.forms['project-form'];
 
 PROJECT_FORM.addEventListener('submit', (e) => {
   e.preventDefault();
-})
+});
 
 // Add projects to project list
 
 const newProject = (() => {
+  const defaultProject = () => {
+    const ALL_PROJECTS = document.querySelector("#project-list");
+
+    ALL_PROJECTS.innerHTML = `
+      <li class="list-group-item list-group-item-dark" id="project-list">All Tasks</li>
+    `;
+  }
+
   const createProject = () => {
     const PROJECT_BTN = document.querySelector("#project-btn");
 
@@ -78,24 +69,24 @@ const newProject = (() => {
 
       // Render projects in views
       const PROJECT_LIST = document.querySelector("#project-list");
-      PROJECT_LIST.innerHTML = `
-        <li class="list-group-item list-group-item-dark" id="project-list">All Projects</li>
-      `;
+      defaultProject();
       for (let i = 0; i < projects.length; i++) {
         PROJECT_LIST.innerHTML += `
-      <li class="list-group-item list-group-item-dark" id="project-list">${projects[i].title}</li>
-    `;
+          <li class="list-group-item list-group-item-dark" id="project-list">${projects[i].title}</li>
+        `;
       }
 
       // Create selection on tasks based on objects
       const TASK_PROJECT = document.querySelector('#task-project');
-      TASK_PROJECT.innerHTML = ``;
+      TASK_PROJECT.innerHTML = `
+        <option value="All Tasks">All Tasks</option>
+      `;
       for (let i = 0; i < projects.length; i++) {
         TASK_PROJECT.innerHTML += `
-      <option value="${projects[i].title}">${projects[i].title}</option>
-    `;
+          <option value="${projects[i].title}">${projects[i].title}</option>
+        `;
       }
-    })
+    });
   }
 
   const renderTasks = () => {
@@ -103,32 +94,37 @@ const newProject = (() => {
 
     PROJECT_LIST.addEventListener('click', (e) => {
       const PROJECT_NAME = e.target.textContent;
-      console.log(PROJECT_NAME);
       const TASK_DISPLAY = document.querySelector('#task-display');
       TASK_DISPLAY.classList.remove('d-none');
 
       const TASK_LIST = document.querySelector("#tasks-list");
-
       TASK_LIST.innerHTML = ``;
 
-      if (PROJECT_NAME === "All Projects") {
+      if (PROJECT_NAME === "All Tasks") {
         for (let i = 0; i < tasks.length; i++) {
           TASK_LIST.innerHTML += `
             <li class="list-group-item list-group-item-dark">${tasks[i].title}</li>
           `;
         }
       } else {
-        let projectTasks = tasks.filter(title => tasks.title === PROJECT_NAME);
-        console.log(projectTasks);
+        for (let i = 0; i < tasks.length; i++) {
+          if (tasks[i].title === PROJECT_NAME) {
+            TASK_LIST.innerHTML += `
+              <li class="list-group-item list-group-item-dark">${tasks[i].title}</li>
+            `;
+          } 
+        }
+        console.log(tasks);
       }
     });
   }
 
   return {
-    createProject, renderTasks
+    defaultProject, createProject, renderTasks
   }
 })();
 
+newProject.defaultProject();
 newProject.createProject();
 newProject.renderTasks();
 
@@ -160,7 +156,7 @@ TASK_BTN.addEventListener('click', () => {
       <li class="list-group-item list-group-item-dark">${tasks[i].title}</li>
     `;
   }
-})
+});
 
 
 
