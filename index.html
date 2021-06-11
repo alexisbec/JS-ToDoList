@@ -29,7 +29,7 @@
               <form id="project-form">
                 <div class="mb-3">
                   <label for="project-title" class="form-label text-info">Project's Title</label>
-                  <input type="text" class="form-control" id="project-title" aria-describedby="emailHelp">
+                  <input type="text" class="form-control" id="project-title" aria-describedby="emailHelp" required>
                 </div>
 
                 <button id="project-btn" type="submit" class="btn btn-primary">Create Project</button>
@@ -54,23 +54,23 @@
                 <form id="tasks-form">
                   <div class="mb-3">
                     <label for="task-name" class="form-label text-info">Task Title</label>
-                    <input type="text" class="form-control" id="task-name">
+                    <input type="text" class="form-control" id="task-name" required>
                   </div>
   
                   <div class="mb-3">
                     <label for="task-description" class="form-label text-info">Task Description</label>
-                    <input type="text" class="form-control" id="task-description">
+                    <input type="text" class="form-control" id="task-description" required>
                   </div>
   
                   <div class="mb-3">
                     <label for="task-date" class="form-label text-info">Due Date</label>
                     <br>
-                    <input type="date" id="task-date" name="trip-start">
+                    <input type="date" id="task-date" name="trip-start" required>
                   </div>
 
                   <div class="mb-3">
                     <label for="task-priority" class="form-label text-info">Priority</label>
-                    <select id="task-priority" class="form-select" aria-label="Default select example">
+                    <select id="task-priority" class="form-select" aria-label="Default select example" required>
                       <option selected>Select Priority</option>
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
