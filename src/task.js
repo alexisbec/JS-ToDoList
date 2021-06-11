@@ -74,38 +74,38 @@ export const taskCreation = (() => {
                         <div class="d-flex mt-3">
                             <div>
                                 <p>
-                                    <button type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
+                                    <button id="edit-task" type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
                                     <button id="delete-task" type="button" class="btn btn-outline-warning mt-4 ms-4">Delete</button>
                                 </p>
                                 <div class="collapse multi-collapse" id="multiCollapseExample1">
                                     <form id="tasks-form">
                                         <div class="mb-3">
-                                            <label for="task-name" class="form-label text-info">Task Title</label>
-                                            <input type="text" class="form-control" id="task-name">
+                                            <label for="edit-task-name" class="form-label text-info">Task Title</label>
+                                            <input type="text" class="form-control" id="edit-task-name">
                                         </div>
                         
                                         <div class="mb-3">
-                                            <label for="task-description" class="form-label text-info">Task Description</label>
-                                            <input type="text" class="form-control" id="task-description">
+                                            <label for="edit-task-description" class="form-label text-info">Task Description</label>
+                                            <input type="text" class="form-control" id="edit-task-description">
                                         </div>
                         
                                         <div class="mb-3">
-                                            <label for="task-date" class="form-label text-info">Due Date</label>
+                                            <label for="edit-task-date" class="form-label text-info">Due Date</label>
                                             <br>
-                                            <input type="date" id="task-date" name="trip-start">
+                                            <input type="date" id="edit-task-date" name="trip-start">
                                         </div>
                         
                                         <div class="mb-3">
-                                            <label for="task-priority" class="form-label text-info">Priority</label>
-                                            <select id="task-priority" class="form-select" aria-label="Default select example">
-                                            <option selected>Select Priority</option>
-                                            <option value="low">Low</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="high">High</option>
+                                            <label for="edit-task-priority" class="form-label text-info">Priority</label>
+                                            <select id="edit-task-priority" class="form-select" aria-label="Default select example">
+                                                <option selected>Select Priority</option>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <button id="task-btn" type="submit" class="btn btn-info">Submit</button>
+                                            <button id="edit-task-btn" type="submit" class="btn btn-info">Submit</button>
                                         </div
                                     </form>
                                 </div>
@@ -119,6 +119,20 @@ export const taskCreation = (() => {
             const DELETE = document.querySelector('#delete-task');
             DELETE.onclick = () => {
                 projectTasks[i].exists = false;
+                renderTask(taskProject, projectTasks);
+            }
+
+            const EDIT = document.querySelector('#edit-task-btn');
+            EDIT.onclick = () => {
+                const EDIT_NAME = document.querySelector('#edit-task-name').value;
+                const EDIT_DESC = document.querySelector('#edit-task-description').value;
+                const EDIT_DATE = document.querySelector('#edit-task-date').value;
+                const EDIT_PRIOR = document.querySelector('#edit-task-priority').value;
+
+                projectTasks[i].title = EDIT_NAME;
+                projectTasks[i].description = EDIT_DESC;
+                projectTasks[i].dueDate = EDIT_DATE;
+                projectTasks[i].priority = EDIT_PRIOR;
                 renderTask(taskProject, projectTasks);
             }
         }
