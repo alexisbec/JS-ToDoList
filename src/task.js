@@ -5,7 +5,7 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
-
+        this.exists = true;
     }
 }
 
@@ -50,7 +50,7 @@ export const taskCreation = (() => {
         const TASKS_LIST = document.querySelector("#tasks-list");
 
         TASKS_LIST.innerHTML = ``;
-        let projectTasks = tasksArr.filter(task => task.project === taskProject);
+        let projectTasks = tasksArr.filter(task  => task.project === taskProject && task.exists === true);
 
         for (let i = 0; i < projectTasks.length; i++) {
             let color = getColor(projectTasks, i);
@@ -72,8 +72,8 @@ export const taskCreation = (() => {
                       </ul>
                       
                       <div class="d-flex mt-3">
-                          <button type="button" class="btn btn-outline-dark mx-3" onclick="editTask(i)">Edit</button>
-                          <button type="button" class="btn btn-outline-warning" onclick="deleteTask(i)">Delete</button>
+                          <button type="button" class="btn btn-outline-dark mx-3" onclick="editTask(${i})">Edit</button>
+                          <button type="button" class="btn btn-outline-warning" onclick="deleteTask(${i}, ${tasksArr}, ${taskProject})">Delete</button>
                       </div>
                       
                     </div>
@@ -95,8 +95,13 @@ export const taskCreation = (() => {
         return color;
     }
 
+    const deleteTask = (id, array, taskProject) => {
+        array[id].exists = false;
+        renderTask(taskProject, array);
+    }
+
     return {
-        createNewTask
+        createNewTask, deleteTask
     }
 })();
 
