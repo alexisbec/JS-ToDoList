@@ -29,6 +29,19 @@ export const taskCreation = (() => {
             const TASK_PRIORITY = TASKS_FORM.querySelector("#task-priority").value;
             const TASK_PROJECT = TASKS_FORM.querySelector("#task-project").value;
 
+            if (TASK_NAME === '') {
+                return;
+            } 
+            if (TASK_DESCRIPTION === '') {
+                return;
+            }
+            if (TASK_DATE === '') {
+                return;
+            }
+            if (TASK_PRIORITY === '') {
+                return;
+            }
+
             // create new task instance
             newTask(tasksArr, TASK_NAME, TASK_DESCRIPTION, TASK_DATE, TASK_PRIORITY, TASK_PROJECT);
 
@@ -74,10 +87,13 @@ export const taskCreation = (() => {
                         <div class="d-flex mt-3">
                             <div>
                                 <p>
-                                    <button id="edit-task" type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
+                                    <button id="edit-task" type="button" class="btn btn-outline-secondary mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
                                     <button id="delete-task" type="button" class="btn btn-outline-warning mt-4 ms-4">Delete</button>
                                 </p>
                                 <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    <div class="container">
+                                        <p id="task-error" class="text-danger text-center"></p>
+                                    </div>
                                     <form id="tasks-form">
                                         <div class="mb-3">
                                             <label for="edit-task-name" class="form-label text-info">Task Title</label>
@@ -105,7 +121,7 @@ export const taskCreation = (() => {
                                             </select>
                                         </div>
                                         <div>
-                                            <button id="edit-task-btn" type="submit" class="btn btn-info">Edit Task</button>
+                                            <button id="edit-task-btn" type="submit" class="btn btn-secondary">Edit Task</button>
                                         </div
                                     </form>
                                 </div>
@@ -133,6 +149,19 @@ export const taskCreation = (() => {
                 const EDIT_DESC = document.querySelector('#edit-task-description').value;
                 const EDIT_DATE = document.querySelector('#edit-task-date').value;
                 const EDIT_PRIOR = document.querySelector('#edit-task-priority').value;
+
+                if (EDIT_NAME === '') {
+                    return;
+                } 
+                if (EDIT_DESC === '') {
+                    return;
+                }
+                if (EDIT_DATE === '') {
+                    return;
+                }
+                if (EDIT_PRIOR === '') {
+                    return;
+                }
 
                 projectTasks[i].title = EDIT_NAME;
                 projectTasks[i].description = EDIT_DESC;

@@ -35,6 +35,10 @@ export const projectCreation = (() => {
     const createProject = (projectArr) => {
         const PROJECT_TITLE = PROJECT_FORM.querySelector("#project-title").value;
 
+        if (PROJECT_TITLE === '') {
+            return;
+        }
+
         const NEW_PROJECT = new Project(PROJECT_TITLE);
         projectArr.push(NEW_PROJECT);
     }
