@@ -56,29 +56,64 @@ export const taskCreation = (() => {
             let color = getColor(projectTasks, i);
 
             TASKS_LIST.innerHTML += `
-              <li class="">
-                  <p>
+            <li class="">
+                <p>
                     <button class="btn btn-${color} w-100" type="button" data-bs-toggle="collapse" data-bs-target="#task-${i}" aria-expanded="false" aria-controls="task-${i}">
                       ${projectTasks[i].title}
                     </button>
-                  </p>
+                </p>
                     
-                  <div class="collapse" id="task-${i}">
+                <div class="collapse" id="task-${i}">
                     <div class="card card-body bg-${color} mb-4">
-                      <ul class="list-group ">
-                          <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Description</span>: ${projectTasks[i].description}</li>
-                          <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Due Date</span>: ${projectTasks[i].dueDate}</li>
-                          <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
-                      </ul>
-                      
-                      <div class="d-flex mt-3">
-                          <button type="button" class="btn btn-outline-dark mx-3">Edit</button>
-                          <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
-                      </div>
-                      
+                        <ul class="list-group ">
+                            <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Description</span>: ${projectTasks[i].description}</li>
+                            <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Due Date</span>: ${projectTasks[i].dueDate}</li>
+                            <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
+                        </ul>
+                    
+                        <div class="d-flex mt-3">
+                            <div>
+                                <p>
+                                    <button type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
+                                </p>
+                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    <form id="tasks-form">
+                                        <div class="mb-3">
+                                            <label for="task-name" class="form-label text-info">Task Title</label>
+                                            <input type="text" class="form-control" id="task-name">
+                                        </div>
+                        
+                                        <div class="mb-3">
+                                            <label for="task-description" class="form-label text-info">Task Description</label>
+                                            <input type="text" class="form-control" id="task-description">
+                                        </div>
+                        
+                                        <div class="mb-3">
+                                            <label for="task-date" class="form-label text-info">Due Date</label>
+                                            <br>
+                                            <input type="date" id="task-date" name="trip-start">
+                                        </div>
+                        
+                                        <div class="mb-3">
+                                            <label for="task-priority" class="form-label text-info">Priority</label>
+                                            <select id="task-priority" class="form-select" aria-label="Default select example">
+                                            <option selected>Select Priority</option>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <button id="task-btn" type="submit" class="btn btn-info">Submit</button>
+                                        </div
+                                    </form>
+                                </div>
+                            </div>
+                            <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
+                        </div>
                     </div>
-                  </div>
-              </li>
+                </div>
+            </li>
             `;
 
             const DELETE = document.querySelector('#delete-task');
