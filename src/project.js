@@ -134,13 +134,13 @@ export const projectCreation = (() => {
                 let color = getColor(projectTasks, i);
 
                 TASK_LIST.innerHTML += `
-                    <li>
+                    <li class="">
                         <p>
                             <button class="btn btn-${color} w-100" type="button" data-bs-toggle="collapse" data-bs-target="#task-${i}" aria-expanded="false" aria-controls="task-${i}">
-                            ${projectTasks[i].title}
+                                ${projectTasks[i].title}
                             </button>
                         </p>
-                            
+                        
                         <div class="collapse" id="task-${i}">
                             <div class="card card-body bg-${color} mb-4">
                                 <ul class="list-group ">
@@ -148,51 +148,12 @@ export const projectCreation = (() => {
                                     <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Due Date</span>: ${projectTasks[i].dueDate}</li>
                                     <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
                                 </ul>
-                            
-                                <div class="d-flex mt-3 justify-content-between">
-                                    <div>
-                                        <p>
-                                            <button class="btn btn-${buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
-                                                Edit
-                                            </button>
-
-                                            <button id="delete-btn-${i}" type="button" class="btn btn-${buttonColor(color)[1]}">Delete</button>
-                                        </p>
-                                        
-                                        <div class="collapse multi-collapse" id="collapseExample-${i}">
-                                            <form id="edit-tasks-form">
-                                                <div class="mb-3">
-                                                    <label for="edit-task-name" class="form-label text-info">Task Title</label>
-                                                    <input type="text" class="form-control" id="edit-task-name-${i}">
-                                                </div>
                                 
-                                                <div class="mb-3">
-                                                    <label for="edit-task-description" class="form-label text-info">Task Description</label>
-                                                    <input type="text" class="form-control" id="edit-task-description-${i}">
-                                                </div>
-                                
-                                                <div class="mb-3">
-                                                    <label for="edit-task-date" class="form-label text-info">Due Date</label>
-                                                    <br>
-                                                    <input type="date" id="edit-task-date-${i}" name="trip-start">
-                                                </div>
-                                
-                                                <div class="mb-3">
-                                                    <label for="edit-task-priority" class="form-label text-info">Priority</label>
-                                                    <select id="edit-task-priority-${i}" class="form-select" aria-label="Default select example">
-                                                        <option selected>Select Priority</option>
-                                                        <option value="low">Low</option>
-                                                        <option value="medium">Medium</option>
-                                                        <option value="high">High</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <button id="edit-btn-${i}" type="submit" class="btn btn-secondary">Edit Task</button>
-                                                </div
-                                            </form>
-                                        </div>
-                                    </div>
+                                <div class="d-flex mt-3">
+                                    <button type="button" class="btn btn-outline-dark mx-3">Edit</button>
+                                    <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
                                 </div>
+                                
                             </div>
                         </div>
                     </li>

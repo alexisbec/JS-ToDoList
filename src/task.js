@@ -159,7 +159,7 @@ export const taskCreation = (() => {
     const buttonColor = (color) => {
         let btnEdit;
         let btnDelete;
-        if (color === "success" || "info") {
+        if (color === "success" || color === "info") {
             btnEdit = "warning";
             btnDelete = "danger";
         }
@@ -176,7 +176,7 @@ export const taskCreation = (() => {
                 projectTasks[i].exists = false;
                 renderTask(taskProject, projectTasks);
             }
-        })
+        });
     }
 
     const editTask = (projectTasks, taskProject, i, TASKS_LIST) => {
