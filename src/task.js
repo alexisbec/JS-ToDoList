@@ -105,7 +105,7 @@ export const taskCreation = (() => {
                                             </select>
                                         </div>
                                         <div>
-                                            <button id="edit-task-btn" type="submit" class="btn btn-info">Submit</button>
+                                            <button id="edit-task-btn" type="submit" class="btn btn-info">Edit Task</button>
                                         </div
                                     </form>
                                 </div>
@@ -123,6 +123,11 @@ export const taskCreation = (() => {
             }
 
             const EDIT = document.querySelector('#edit-task-btn');
+            document.querySelector('#edit-task-name').setAttribute('value', projectTasks[i].title);
+            document.querySelector('#edit-task-description').setAttribute('value', projectTasks[i].description);
+            document.querySelector('#edit-task-date').setAttribute('value', projectTasks[i].dueDate);
+            document.querySelector('#edit-task-priority').setAttribute('value', projectTasks[i].priority);
+
             EDIT.onclick = () => {
                 const EDIT_NAME = document.querySelector('#edit-task-name').value;
                 const EDIT_DESC = document.querySelector('#edit-task-description').value;
