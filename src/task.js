@@ -48,7 +48,7 @@ export const taskCreation = (() => {
             // render task to the UI
             renderTask(TASK_PROJECT, tasksArr);
 
-            document.querySelector('#tasks-form').reset();
+            document.querySelector('#tasks-form');
         })
     }
 
@@ -68,10 +68,10 @@ export const taskCreation = (() => {
         for (let i = 0; i < projectTasks.length; i++) {
             let color = getColor(projectTasks, i);
             TASKS_LIST.innerHTML += `
-            <li class="">
+            <li>
                 <p>
                     <button class="btn btn-${color} w-100" type="button" data-bs-toggle="collapse" data-bs-target="#task-${i}" aria-expanded="false" aria-controls="task-${i}">
-                      ${projectTasks[i].title}
+                        ${projectTasks[i].title}
                     </button>
                 </p>
                     
@@ -83,16 +83,16 @@ export const taskCreation = (() => {
                             <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
                         </ul>
                     
-                        <div class="d-flex mt-3">
+                        <div class="d-flex mt-3 justify-content-between">
                             <div>
                                 <p>
                                     <button class="btn btn-${buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
-                                    Edit
+                                        Edit
                                     </button>
-    
-                                    <button id="delete-btn-${i}" type="button" class="btn btn-${buttonColor(color)[1]} mt-4 ms-4">Delete</button>
+
+                                    <button id="delete-btn-${i}" type="button" class="btn btn-${buttonColor(color)[1]}">Delete</button>
                                 </p>
-                                  
+
                                 <div class="collapse multi-collapse" id="collapseExample-${i}">
                                     <form id="edit-tasks-form">
                                         <div class="mb-3">
