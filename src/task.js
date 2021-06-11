@@ -75,6 +75,7 @@ export const taskCreation = (() => {
                             <div>
                                 <p>
                                     <button type="button" class="btn btn-info mt-4" href="#multiCollapseExample1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="multiCollapseExample1">Edit</button>
+                                    <button id="delete-task" type="button" class="btn btn-outline-warning mt-4 ms-4">Delete</button>
                                 </p>
                                 <div class="collapse multi-collapse" id="multiCollapseExample1">
                                     <form id="tasks-form">
@@ -109,7 +110,6 @@ export const taskCreation = (() => {
                                     </form>
                                 </div>
                             </div>
-                            <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
                         </div>
                     </div>
                 </div>
