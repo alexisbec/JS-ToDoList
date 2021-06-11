@@ -72,14 +72,20 @@ export const taskCreation = (() => {
                       </ul>
                       
                       <div class="d-flex mt-3">
-                          <button type="button" class="btn btn-outline-dark mx-3" onclick="editTask(${i})">Edit</button>
-                          <button type="button" class="btn btn-outline-warning" onclick="deleteTask(${i}, ${tasksArr}, ${taskProject})">Delete</button>
+                          <button type="button" class="btn btn-outline-dark mx-3">Edit</button>
+                          <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
                       </div>
                       
                     </div>
                   </div>
               </li>
             `;
+
+            const DELETE = document.querySelector('#delete-task');
+            DELETE.onclick = () => {
+                projectTasks[i].exists = false;
+                renderTask(taskProject, projectTasks);
+            }
         }
     }
 
@@ -95,13 +101,8 @@ export const taskCreation = (() => {
         return color;
     }
 
-    const deleteTask = (id, array, taskProject) => {
-        array[id].exists = false;
-        renderTask(taskProject, array);
-    }
-
     return {
-        createNewTask, deleteTask
+        createNewTask
     }
 })();
 
