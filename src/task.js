@@ -5,6 +5,7 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.project = project;
+
     }
 }
 
@@ -69,6 +70,12 @@ export const taskCreation = (() => {
                           <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Due Date</span>: ${projectTasks[i].dueDate}</li>
                           <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
                       </ul>
+                      
+                      <div class="d-flex mt-3">
+                          <button type="button" class="btn btn-outline-dark mx-3" onclick="editTask(i)">Edit</button>
+                          <button type="button" class="btn btn-outline-warning" onclick="deleteTask(i)">Delete</button>
+                      </div>
+                      
                     </div>
                   </div>
               </li>
