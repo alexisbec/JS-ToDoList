@@ -1,12 +1,53 @@
 class Task {
-    constructor(title, description, dueDate, priority, project = "default") {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.project = project;
-        this.exists = true;
-    }
+  constructor(title, description, dueDate, priority, project = 'default') {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.project = project;
+    this.exists = true;
+  }
+
+  // Edit Delete Tasks methods
+  static deleteTask(projectTasks, taskProject, i, TASKS_LIST, renderTask) {
+    TASKS_LIST.addEventListener('click', (e) => {
+      if (e.target.id === `delete-btn-${i}`) {
+        projectTasks[i].exists = false;
+        renderTask(taskProject, projectTasks);
+      }
+    });
+  }
+
+  static editTask(projectTasks, taskProject, i, TASKS_LIST, renderTask) {
+    TASKS_LIST.addEventListener('click', (e) => {
+      if (e.target.id === `edit-btn-${i}`) {
+        const EDIT_NAME = document.querySelector(`#edit-task-name-${i}`).value;
+        const EDIT_DESC = document.querySelector(`#edit-task-description-${i}`).value;
+        const EDIT_DATE = document.querySelector(`#edit-task-date-${i}`).value;
+        const EDIT_PRIOR = document.querySelector(`#edit-task-priority-${i}`).value;
+
+        if (EDIT_NAME === '') {
+          return;
+        }
+        if (EDIT_DESC === '') {
+          return;
+        }
+        if (EDIT_DATE === '') {
+          return;
+        }
+        if (EDIT_PRIOR === '') {
+          return;
+        }
+
+        projectTasks[i].title = EDIT_NAME;
+        projectTasks[i].description = EDIT_DESC;
+        projectTasks[i].dueDate = EDIT_DATE;
+        projectTasks[i].priority = EDIT_PRIOR;
+
+        renderTask(taskProject, projectTasks);
+      }
+    });
+  }
 }
 
 // Tasks Form Information
@@ -14,60 +55,56 @@ const TASKS_FORM = document.forms['tasks-form'];
 
 // prevent form default behaviour
 TASKS_FORM.addEventListener('submit', (e) => {
-    e.preventDefault();
+  e.preventDefault();
 });
 
 // Task Creation Module (IIFE);
 export const taskCreation = (() => {
-    // create task and display it on the UI
-    const createNewTask = (tasksArr) => {
-        const TASK_BTN = document.querySelector("#task-btn");
-        TASK_BTN.addEventListener('click', () => {
-            const TASK_NAME = TASKS_FORM.querySelector("#task-name").value;
-            const TASK_DESCRIPTION = TASKS_FORM.querySelector("#task-description").value;
-            const TASK_DATE = TASKS_FORM.querySelector("#task-date").value;
-            const TASK_PRIORITY = TASKS_FORM.querySelector("#task-priority").value;
-            const TASK_PROJECT = TASKS_FORM.querySelector("#task-project").value;
+  // create task object
+  const newTask = (tasksArr, name, description, date, priority, project) => {
+    const newTask = new Task(name, description, date, priority, project);
+    tasksArr.push(newTask);
+  };
 
-            if (TASK_NAME === '') {
-                return;
-            } 
-            if (TASK_DESCRIPTION === '') {
-                return;
-            }
-            if (TASK_DATE === '') {
-                return;
-            }
-            if (TASK_PRIORITY === '') {
-                return;
-            }
-
-            // create new task instance
-            newTask(tasksArr, TASK_NAME, TASK_DESCRIPTION, TASK_DATE, TASK_PRIORITY, TASK_PROJECT);
-
-            // render task to the UI
-            renderTask(TASK_PROJECT, tasksArr);
-
-            document.querySelector('#tasks-form');
-        })
+  // UI color logic
+  const getColor = (arr, i) => {
+    let color;
+    if (arr[i].priority === 'low') {
+      color = 'success';
+    } else if (arr[i].priority === 'medium') {
+      color = 'info';
+    } else {
+      color = 'danger';
     }
+    return color;
+  };
 
-    // create task object
-    const newTask = (tasksArr, name, description, date, priority, project) => {
-        const newTask = new Task(name, description, date, priority, project);
-        tasksArr.push(newTask);
+  const buttonColor = (color) => {
+    let btnEdit;
+    let btnDelete;
+    if (color === 'success' || color === 'info') {
+      btnEdit = 'warning';
+      btnDelete = 'danger';
     }
+    if (color === 'danger') {
+      btnEdit = 'primary';
+      btnDelete = 'warning';
+    }
+    return [btnEdit, btnDelete];
+  };
 
-    // render tasks in the UI
-    const renderTask = (taskProject, tasksArr) => {
-        const TASKS_LIST = document.querySelector("#tasks-list");
+  // render tasks in the UI
+  const renderTask = (taskProject, tasksArr) => {
+    const TASKS_LIST = document.querySelector('#tasks-list');
 
-        TASKS_LIST.innerHTML = ``;
-        let projectTasks = tasksArr.filter(task  => task.project === taskProject && task.exists === true);
+    TASKS_LIST.innerHTML = '';
+    const projectTasks = tasksArr.filter(task => task.project === taskProject
+        && task.exists === true);
 
-        for (let i = 0; i < projectTasks.length; i++) {
-            let color = getColor(projectTasks, i);
-            TASKS_LIST.innerHTML += `
+    for (let i = 0; i < projectTasks.length; i += 1) {
+      const color = getColor(projectTasks, i);
+      /* eslint max-len: ["error", { "ignoreTemplateLiterals": true }] */
+      TASKS_LIST.innerHTML += `
             <li>
                 <p>
                     <button class="btn btn-${color} w-100" type="button" data-bs-toggle="collapse" data-bs-target="#task-${i}" aria-expanded="false" aria-controls="task-${i}">
@@ -132,87 +169,69 @@ export const taskCreation = (() => {
             </li>
             `;
 
-            document.querySelector(`#edit-task-name-${i}`).setAttribute('value', projectTasks[i].title);
-            document.querySelector(`#edit-task-description-${i}`).setAttribute('value', projectTasks[i].description);
-            document.querySelector(`#edit-task-date-${i}`).setAttribute('value', projectTasks[i].dueDate);
-            document.querySelector(`#edit-task-priority-${i}`).setAttribute('value', projectTasks[i].priority);
+      document.querySelector(`#edit-task-name-${i}`).setAttribute('value', projectTasks[i].title);
+      document.querySelector(`#edit-task-description-${i}`).setAttribute('value', projectTasks[i].description);
+      document.querySelector(`#edit-task-date-${i}`).setAttribute('value', projectTasks[i].dueDate);
+      document.querySelector(`#edit-task-priority-${i}`)
+        .setAttribute('value', projectTasks[i].priority);
 
-            deleteTask(projectTasks, taskProject, i, TASKS_LIST);
-            editTask(projectTasks, taskProject, i, TASKS_LIST)
-        }
+      Task.deleteTask(projectTasks,
+        taskProject,
+        i,
+        TASKS_LIST,
+        taskCreation.renderTask);
 
-
+      Task.editTask(projectTasks,
+        taskProject,
+        i,
+        TASKS_LIST,
+        taskCreation.renderTask);
     }
+  };
 
-    const getColor = (arr, i) => {
-        let color;
-        if (arr[i].priority === 'low') {
-            color = 'success';
-        } else if (arr[i].priority === 'medium') {
-            color = 'info';
-        } else {
-            color = 'danger';
-        }
-        return color;
-    }
+  // create task and display it on the UI
+  const createNewTask = (tasksArr) => {
+    const TASK_BTN = document.querySelector('#task-btn');
+    TASK_BTN.addEventListener('click', () => {
+      const TASK_NAME = TASKS_FORM.querySelector('#task-name').value;
+      const TASK_DESCRIPTION = TASKS_FORM
+        .querySelector('#task-description')
+        .value;
+      const TASK_DATE = TASKS_FORM.querySelector('#task-date').value;
+      const TASK_PRIORITY = TASKS_FORM.querySelector('#task-priority').value;
+      const TASK_PROJECT = TASKS_FORM.querySelector('#task-project').value;
 
-    const buttonColor = (color) => {
-        let btnEdit;
-        let btnDelete;
-        if (color === "success" || color === "info") {
-            btnEdit = "warning";
-            btnDelete = "danger";
-        }
-        if (color === "danger") {
-            btnEdit = "primary";
-            btnDelete = "warning";
-        }
-        return [btnEdit, btnDelete];
-    }
+      if (TASK_NAME === '') {
+        return;
+      }
+      if (TASK_DESCRIPTION === '') {
+        return;
+      }
+      if (TASK_DATE === '') {
+        return;
+      }
+      if (TASK_PRIORITY === '') {
+        return;
+      }
 
-    const deleteTask = (projectTasks, taskProject, i, TASKS_LIST) => {
-        TASKS_LIST.addEventListener('click', (e) => {
-            if (e.target.id === `delete-btn-${i}`) {
-                projectTasks[i].exists = false;
-                renderTask(taskProject, projectTasks);
-            }
-        });
-    }
+      // create new task instance
+      newTask(tasksArr,
+        TASK_NAME,
+        TASK_DESCRIPTION,
+        TASK_DATE,
+        TASK_PRIORITY,
+        TASK_PROJECT);
 
-    const editTask = (projectTasks, taskProject, i, TASKS_LIST) => {
-        TASKS_LIST.addEventListener('click', (e) => {
-            if (e.target.id === `edit-btn-${i}`) {
-                const EDIT_NAME = document.querySelector(`#edit-task-name-${i}`).value;
-                const EDIT_DESC = document.querySelector(`#edit-task-description-${i}`).value;
-                const EDIT_DATE = document.querySelector(`#edit-task-date-${i}`).value;
-                const EDIT_PRIOR = document.querySelector(`#edit-task-priority-${i}`).value;
+      // render task to the UI
+      renderTask(TASK_PROJECT, tasksArr);
 
-                if (EDIT_NAME === '') {
-                    return;
-                }
-                if (EDIT_DESC === '') {
-                    return;
-                }
-                if (EDIT_DATE === '') {
-                    return;
-                }
-                if (EDIT_PRIOR === '') {
-                    return;
-                }
+      document.querySelector('#tasks-form');
+    });
+  };
 
-                projectTasks[i].title = EDIT_NAME;
-                projectTasks[i].description = EDIT_DESC;
-                projectTasks[i].dueDate = EDIT_DATE;
-                projectTasks[i].priority = EDIT_PRIOR;
-
-                renderTask(taskProject, projectTasks);
-            }
-        })
-    }
-
-    return {
-        createNewTask, deleteTask, editTask
-    }
+  return {
+    createNewTask, renderTask,
+  };
 })();
 
 export default { taskCreation };
