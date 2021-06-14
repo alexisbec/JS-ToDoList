@@ -1,3 +1,5 @@
+import { Task } from "./main";
+
 // Task Creation Module (IIFE);
 export const taskCreation = (() => {
   // Task Form
@@ -14,10 +16,51 @@ export const taskCreation = (() => {
   }
 
   // create task object
-  const newTask = (tasksArr, name, description, date, priority, project) => {
+  const newTask = (tasksArr, Task, name, description, date, priority, project) => {
     const newTask = new Task(name, description, date, priority, project);
     tasksArr.push(newTask);
   };
+
+  // Edit/Delete Tasks methods
+  const deleteTask = (projectTasks, taskProject, i, TASKS_LIST) => {
+    TASKS_LIST.addEventListener('click', (e) => {
+      if (e.target.id === `delete-btn-${i}`) {
+        projectTasks[i].exists = false;
+        renderTask(taskProject, projectTasks);
+      }
+    });
+  }
+
+  const editTask = (projectTasks, taskProject, i, TASKS_LIST) =>{
+    TASKS_LIST.addEventListener('click', (e) => {
+      if (e.target.id === `edit-btn-${i}`) {
+        const EDIT_NAME = document.querySelector(`#edit-task-name-${i}`).value;
+        const EDIT_DESC = document.querySelector(`#edit-task-description-${i}`).value;
+        const EDIT_DATE = document.querySelector(`#edit-task-date-${i}`).value;
+        const EDIT_PRIOR = document.querySelector(`#edit-task-priority-${i}`).value;
+
+        if (EDIT_NAME === '') {
+          return;
+        }
+        if (EDIT_DESC === '') {
+          return;
+        }
+        if (EDIT_DATE === '') {
+          return;
+        }
+        if (EDIT_PRIOR === '') {
+          return;
+        }
+
+        projectTasks[i].title = EDIT_NAME;
+        projectTasks[i].description = EDIT_DESC;
+        projectTasks[i].dueDate = EDIT_DATE;
+        projectTasks[i].priority = EDIT_PRIOR;
+
+        renderTask(taskProject, projectTasks);
+      }
+    });
+  }
 
   // render tasks in the UI
   const renderTask = (taskProject, tasksArr) => {
@@ -28,7 +71,7 @@ export const taskCreation = (() => {
         && task.exists === true);
 
     for (let i = 0; i < projectTasks.length; i += 1) {
-      const color = getColor(projectTasks, i);
+      const color = Task.getColor(projectTasks, i);
       /* eslint max-len: ["error", { "ignoreTemplateLiterals": true }] */
       TASKS_LIST.innerHTML += `
             <li>
@@ -49,11 +92,11 @@ export const taskCreation = (() => {
                         <div class="d-flex mt-3 justify-content-between">
                             <div>
                                 <p>
-                                    <button class="btn btn-${buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
+                                    <button class="btn btn-${Task.buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
                                         Edit
                                     </button>
 
-                                    <button id="delete-btn-${i}" type="button" class="btn btn-${buttonColor(color)[1]}">Delete</button>
+                                    <button id="delete-btn-${i}" type="button" class="btn btn-${Task.buttonColor(color)[1]}">Delete</button>
                                 </p>
 
                                 <div class="collapse multi-collapse" id="collapseExample-${i}">
@@ -101,13 +144,13 @@ export const taskCreation = (() => {
       document.querySelector(`#edit-task-priority-${i}`)
         .setAttribute('value', projectTasks[i].priority);
 
-      Task.deleteTask(projectTasks,
+      deleteTask(projectTasks,
         taskProject,
         i,
         TASKS_LIST,
         taskCreation.renderTask);
 
-      Task.editTask(projectTasks,
+      editTask(projectTasks,
         taskProject,
         i,
         TASKS_LIST,
@@ -116,7 +159,7 @@ export const taskCreation = (() => {
   };
 
   // create task and display it on the UI
-  const createNewTask = (tasksArr, taskForm) => {
+  const createNewTask = (tasksArr, Task) => {
     const TASKS_FORM = taskForm();
     const TASK_BTN = document.querySelector('#task-btn');
     TASK_BTN.addEventListener('click', () => {
@@ -143,6 +186,7 @@ export const taskCreation = (() => {
 
       // create new task instance
       newTask(tasksArr,
+        Task,
         TASK_NAME,
         TASK_DESCRIPTION,
         TASK_DATE,

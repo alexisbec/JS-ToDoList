@@ -34,7 +34,7 @@ const tasks = [
 
 // Class Constructor
 
-class Task {
+export class Task {
   constructor(title, description, dueDate, priority, project = 'default') {
     this.title = title;
     this.description = description;
@@ -71,47 +71,6 @@ class Task {
     }
     return [btnEdit, btnDelete];
   };
-
-  // Edit/Delete Tasks methods
-  static deleteTask(projectTasks, taskProject, i, TASKS_LIST, renderTask) {
-    TASKS_LIST.addEventListener('click', (e) => {
-      if (e.target.id === `delete-btn-${i}`) {
-        projectTasks[i].exists = false;
-        renderTask(taskProject, projectTasks);
-      }
-    });
-  }
-
-  static editTask(projectTasks, taskProject, i, TASKS_LIST, renderTask) {
-    TASKS_LIST.addEventListener('click', (e) => {
-      if (e.target.id === `edit-btn-${i}`) {
-        const EDIT_NAME = document.querySelector(`#edit-task-name-${i}`).value;
-        const EDIT_DESC = document.querySelector(`#edit-task-description-${i}`).value;
-        const EDIT_DATE = document.querySelector(`#edit-task-date-${i}`).value;
-        const EDIT_PRIOR = document.querySelector(`#edit-task-priority-${i}`).value;
-
-        if (EDIT_NAME === '') {
-          return;
-        }
-        if (EDIT_DESC === '') {
-          return;
-        }
-        if (EDIT_DATE === '') {
-          return;
-        }
-        if (EDIT_PRIOR === '') {
-          return;
-        }
-
-        projectTasks[i].title = EDIT_NAME;
-        projectTasks[i].description = EDIT_DESC;
-        projectTasks[i].dueDate = EDIT_DATE;
-        projectTasks[i].priority = EDIT_PRIOR;
-
-        renderTask(taskProject, projectTasks);
-      }
-    });
-  }
 }
 
 class Project {
@@ -125,4 +84,4 @@ projectCreation.addProject(projects, Project);
 projectCreation.displayProjectTasks(tasks);
 
 // Call tasks functions with attached event listeners
-taskCreation.createNewTask(tasks, taskCreation.renderTask);
+taskCreation.createNewTask(tasks, Task);

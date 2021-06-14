@@ -1,3 +1,5 @@
+import { Task } from "./main";
+
 // Project Creation Module (IIFE);
 export const projectCreation = (() => {
   const projectForm = () => {
@@ -58,19 +60,6 @@ export const projectCreation = (() => {
     TASK_DISPLAY.classList.remove('d-none');
   };
 
-  // Assign color variable to use in DOM
-  const getColor = (arr, i) => {
-    let color;
-    if (arr[i].priority === 'low') {
-      color = 'success';
-    } else if (arr[i].priority === 'medium') {
-      color = 'info';
-    } else {
-      color = 'danger';
-    }
-    return color;
-  };
-
   const renderTasks = (projectName, tasksArr) => {
     const TASK_LIST = document.querySelector('#tasks-list');
     TASK_LIST.innerHTML = '';
@@ -82,7 +71,7 @@ export const projectCreation = (() => {
       ADD_TASK_BTN.classList.add('d-none');
       FORM.classList.add('d-none');
       for (let i = 0; i < allTasks.length; i += 1) {
-        const color = getColor(allTasks, i);
+        const color = Task.getColor(allTasks, i);
         /* eslint max-len: ["error", { "ignoreTemplateLiterals": true }] */
         TASK_LIST.innerHTML += `
                     <li class="">
@@ -110,7 +99,7 @@ export const projectCreation = (() => {
       const projectTasks = tasksArr.filter(task => task.project === projectName
           && task.exists === true);
       for (let i = 0; i < projectTasks.length; i += 1) {
-        const color = getColor(projectTasks, i);
+        const color = Task.getColor(projectTasks, i);
 
         TASK_LIST.innerHTML += `
                     <li class="">
