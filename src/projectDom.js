@@ -1,7 +1,6 @@
 import { Task } from "./main";
 import { Project } from "./main";
 import { taskCreation } from "./taskDom";
-import { addToLocalStorage } from "./main";
 
 // Project Creation Module (IIFE);
 export const projectCreation = (() => {
@@ -24,6 +23,8 @@ export const projectCreation = (() => {
     }
 
     Project.newProject(PROJECT_TITLE, projectArr);
+
+    localStorage.setItem('projects', JSON.stringify(projectArr));
   };
 
   const renderProjectView = (projectArr) => {
@@ -115,7 +116,7 @@ export const projectCreation = (() => {
       createProject(projectArr, projectForm);
 
       // Render projects in views
-      addToLocalStorage(projectArr);
+      renderProjectView(projectArr);
 
       // reset project form
       document.querySelector('#project-form').reset();

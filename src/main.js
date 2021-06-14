@@ -1,35 +1,35 @@
-// Method imports
 import { projectCreation } from './projectDom';
 import { taskCreation } from './taskDom';
 
 // Object's arrays
-let projects = [];
+let projects = JSON.parse(localStorage.getItem('projects')) || [];
 
-const tasks = [
-  {
-    title: 'Task 1',
-    description: 'Description 1',
-    dueDate: '2021-06-10',
-    priority: 'low',
-    project: 'Project 1',
-    exists: true,
-  },
-  {
-    title: 'Task 2',
-    description: 'Description 2',
-    dueDate: '2021-06-10',
-    priority: 'medium',
-    project: 'Project 2',
-    exists: true,
-  },
-  {
-    title: 'Task 3',
-    description: 'Description 3',
-    dueDate: '2021-06-10',
-    priority: 'high',
-    project: 'Project 3',
-    exists: true,
-  },
+const tasks = JSON.parse(localStorage.getItem('tasks')) ||
+    [
+        {
+          title: 'Task 1',
+          description: 'Description 1',
+          dueDate: '2021-06-10',
+          priority: 'low',
+          project: 'Project 1',
+          exists: true,
+        },
+        {
+        title: 'Task 2',
+        description: 'Description 2',
+        dueDate: '2021-06-10',
+        priority: 'medium',
+        project: 'Project 2',
+        exists: true,
+        },
+        {
+          title: 'Task 3',
+          description: 'Description 3',
+          dueDate: '2021-06-10',
+          priority: 'high',
+          project: 'Project 3',
+          exists: true,
+        }
 ];
 
 // Class Constructor
@@ -91,33 +91,13 @@ export class Project {
 }
 
 // Call of project's function with attached event listeners
+projectCreation.renderProjectView(projects);
 projectCreation.addProject(projects);
 projectCreation.displayProjectTasks(tasks);
 
 // Call tasks functions with attached event listeners
 taskCreation.createNewTask(tasks, Task);
 
-// function to add todos to local storage
-function addToLocalStorage(projects) {
-  // conver the array to string then store it.
-  localStorage.setItem('projects', JSON.stringify(projects));
-  // render them to screen
-  projectCreation.renderProjectView(projects);
-}
 
-// function helps to get everything from local storage
-function getFromLocalStorage() {
-  const reference = localStorage.getItem('projects');
-  // if reference exists
-  if (reference) {
-    // converts back to array and store it in todos array
-    projects = JSON.parse(reference);
-    projectCreation.renderProjectView(projects);
-  }
-}
-
-getFromLocalStorage();
 console.log(projects);
 
-
-export { addToLocalStorage, getFromLocalStorage };

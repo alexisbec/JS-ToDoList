@@ -1,5 +1,4 @@
 import { Task } from "./main";
-import { addToLocalStorage } from "./main";
 
 // Task Creation Module (IIFE);
 export const taskCreation = (() => {
@@ -187,9 +186,10 @@ export const taskCreation = (() => {
         TASK_PRIORITY,
         TASK_PROJECT);
 
+      localStorage.setItem('tasks', JSON.stringify(tasksArr));
+
       taskForm();
 
-      addToLocalStorage(tasksArr);
       // render task to the UI
       renderTask(TASK_PROJECT, tasksArr);
 
