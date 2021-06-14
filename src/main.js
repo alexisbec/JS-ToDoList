@@ -1,36 +1,10 @@
-import { projectCreation } from './projectDom';
-import { taskCreation } from './taskDom';
+import { projectCreation, taskCreation } from './taskDom';
 
 // Object's arrays
 let projects = JSON.parse(localStorage.getItem('projects')) || [];
 
 const tasks = JSON.parse(localStorage.getItem('tasks')) ||
-    [
-        {
-          title: 'Task 1',
-          description: 'Description 1',
-          dueDate: '2021-06-10',
-          priority: 'low',
-          project: 'Project 1',
-          exists: true,
-        },
-        {
-        title: 'Task 2',
-        description: 'Description 2',
-        dueDate: '2021-06-10',
-        priority: 'medium',
-        project: 'Project 2',
-        exists: true,
-        },
-        {
-          title: 'Task 3',
-          description: 'Description 3',
-          dueDate: '2021-06-10',
-          priority: 'high',
-          project: 'Project 3',
-          exists: true,
-        }
-];
+    [];
 
 // Class Constructor
 
@@ -41,7 +15,7 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.project = project;
-    this.exists = true;
+    this.exist = true;
   }
 
   // create task object
@@ -49,6 +23,38 @@ export class Task {
     const newTask = new Task(name, description, date, priority, project);
     tasksArr.push(newTask);
   };
+
+  static editTask(projectTasks,taskProject, i, renderTask) {
+    const EDIT_TASK_FORM = document.forms['edit-tasks-form']
+
+    const EDIT_TASK_BTN = document.querySelector(`#edit-btn-${i}`);
+    EDIT_TASK_BTN.addEventListener('click', () => {
+      const EDIT_TASK_NAME = EDIT_TASK_FORM.querySelector(`#edit-task-name-${i}`).value;
+      const EDIT_TASK_DESCRIPTION = EDIT_TASK_FORM.querySelector(`#edit-task-description-${i}`).value;
+      const EDIT_TASK_DATE = EDIT_TASK_FORM.querySelector(`#edit-task-date-${i}`).value;
+      const EDIT_TASK_PRIORITY = EDIT_TASK_FORM.querySelector(`#edit-task-priority-${i}`).value;
+
+      if (EDIT_TASK_NAME === '') {
+        return;
+      }
+      if (EDIT_TASK_DESCRIPTION === '') {
+        return;
+      }
+      if (EDIT_TASK_DATE === '') {
+        return;
+      }
+      if (EDIT_TASK_PRIORITY === '') {
+        return;
+      }
+
+      projectTasks[i].title = EDIT_TASK_NAME;
+      projectTasks[i].description = EDIT_TASK_DESCRIPTION;
+      projectTasks[i].date = EDIT_TASK_DATE;
+      projectTasks[i].priority = EDIT_TASK_PRIORITY;
+
+      renderTask(taskProject, projectTasks)
+    });
+  }
 
   // UI color logic
   static getColor(arr, i) {
@@ -98,6 +104,4 @@ projectCreation.displayProjectTasks(tasks);
 // Call tasks functions with attached event listeners
 taskCreation.createNewTask(tasks, Task);
 
-
-console.log(projects);
 
