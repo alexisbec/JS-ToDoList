@@ -1,5 +1,6 @@
 import { Task } from "./main";
 import { Project } from "./main";
+import { taskCreation } from "./taskDom";
 
 // Project Creation Module (IIFE);
 export const projectCreation = (() => {
@@ -27,7 +28,7 @@ export const projectCreation = (() => {
   const renderProjectView = (projectArr) => {
     const PROJECT_LIST = document.querySelector('#project-list');
     PROJECT_LIST.innerHTML = `
-            <li class="list-group-item list-group-item-dark btn my-1" id="project-list">All Projects</li>
+            <li class="list-group-item list-group-item-dark btn my-1" id="all-projects">All Projects</li>
         `;
 
     for (let i = 0; i < projectArr.length; i += 1) {
@@ -96,38 +97,9 @@ export const projectCreation = (() => {
     } else {
       ADD_TASK_BTN.classList.remove('d-none');
       FORM.classList.remove('d-none');
-      const projectTasks = tasksArr.filter(task => task.project === projectName
-          && task.exists === true);
-      for (let i = 0; i < projectTasks.length; i += 1) {
-        const color = Task.getColor(projectTasks, i);
-
-        TASK_LIST.innerHTML += `
-                    <li class="">
-                        <p>
-                            <button class="btn btn-${color} w-100" type="button" data-bs-toggle="collapse" data-bs-target="#task-${i}" aria-expanded="false" aria-controls="task-${i}">
-                                ${projectTasks[i].title}
-                            </button>
-                        </p>
-                        
-                        <div class="collapse" id="task-${i}">
-                            <div class="card card-body bg-${color} mb-4">
-                                <ul class="list-group ">
-                                    <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Description</span>: ${projectTasks[i].description}</li>
-                                    <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Due Date</span>: ${projectTasks[i].dueDate}</li>
-                                    <li class="list-group-item bg-${color} text-white"><span class="fw-bold">Priority</span>: ${projectTasks[i].priority}</li>
-                                </ul>
-                                
-                                <div class="d-flex mt-3">
-                                    <button type="button" class="btn btn-outline-dark mx-3">Edit</button>
-                                    <button id="delete-task" type="button" class="btn btn-outline-warning">Delete</button>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </li>
-                `;
-      }
+      taskCreation.renderTask(projectName, tasksArr);
     }
+
   };
 
   // Create and display project in the UI

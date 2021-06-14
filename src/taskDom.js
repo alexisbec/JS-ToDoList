@@ -186,6 +186,7 @@ export const taskCreation = (() => {
         TASK_PRIORITY,
         TASK_PROJECT);
 
+      taskForm();
       // render task to the UI
       renderTask(TASK_PROJECT, tasksArr);
 
