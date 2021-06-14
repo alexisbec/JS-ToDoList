@@ -15,12 +15,6 @@ export const taskCreation = (() => {
     return TASKS_FORM;
   }
 
-  // create task object
-  const newTask = (tasksArr, Task, name, description, date, priority, project) => {
-    const newTask = new Task(name, description, date, priority, project);
-    tasksArr.push(newTask);
-  };
-
   // Edit/Delete Tasks methods
   const deleteTask = (projectTasks, taskProject, i, TASKS_LIST) => {
     TASKS_LIST.addEventListener('click', (e) => {
@@ -159,7 +153,7 @@ export const taskCreation = (() => {
   };
 
   // create task and display it on the UI
-  const createNewTask = (tasksArr, Task) => {
+  const createNewTask = (tasksArr) => {
     const TASKS_FORM = taskForm();
     const TASK_BTN = document.querySelector('#task-btn');
     TASK_BTN.addEventListener('click', () => {
@@ -185,8 +179,7 @@ export const taskCreation = (() => {
       }
 
       // create new task instance
-      newTask(tasksArr,
-        Task,
+      Task.newTask(tasksArr,
         TASK_NAME,
         TASK_DESCRIPTION,
         TASK_DATE,

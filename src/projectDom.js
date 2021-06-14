@@ -1,4 +1,5 @@
 import { Task } from "./main";
+import { Project } from "./main";
 
 // Project Creation Module (IIFE);
 export const projectCreation = (() => {
@@ -14,14 +15,13 @@ export const projectCreation = (() => {
   }
 
   // Project Helper methods
-  const createProject = (projectArr, projectForm, Project) => {
+  const createProject = (projectArr, projectForm) => {
     const PROJECT_TITLE = projectForm().querySelector('#project-title').value;
     if (PROJECT_TITLE === '') {
       return;
     }
 
-    const NEW_PROJECT = new Project(PROJECT_TITLE);
-    projectArr.push(NEW_PROJECT);
+    Project.newProject(PROJECT_TITLE, projectArr);
   };
 
   const renderProjectView = (projectArr) => {
@@ -126,18 +126,12 @@ export const projectCreation = (() => {
                         </div>
                     </li>
                 `;
-
-        const DELETE = document.querySelector('#delete-task');
-        DELETE.onclick = () => {
-          projectTasks[i].exists = false;
-          renderTasks(projectName, projectTasks);
-        };
       }
     }
   };
 
   // Create and display project in the UI
-  const addProject = (projectArr, Project) => {
+  const addProject = (projectArr) => {
     const PROJECT_BTN = document.querySelector('#project-btn');
 
     PROJECT_BTN.addEventListener('click', () => {
@@ -145,7 +139,7 @@ export const projectCreation = (() => {
       projectForm();
 
       // create new project
-      createProject(projectArr, projectForm, Project);
+      createProject(projectArr, projectForm);
 
       // Render projects in views
       renderProjectView(projectArr);

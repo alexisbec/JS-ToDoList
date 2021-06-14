@@ -44,6 +44,12 @@ export class Task {
     this.exists = true;
   }
 
+  // create task object
+  static newTask(tasksArr, name, description, date, priority, project) {
+    const newTask = new Task(name, description, date, priority, project);
+    tasksArr.push(newTask);
+  };
+
   // UI color logic
   static getColor(arr, i) {
     let color;
@@ -73,14 +79,19 @@ export class Task {
   };
 }
 
-class Project {
+export class Project {
   constructor(title) {
     this.title = title;
+  }
+
+  static newProject(projectTitle, projectArr) {
+    const NEW_PROJECT = new Project(projectTitle);
+    projectArr.push(NEW_PROJECT);
   }
 }
 
 // Call of project's function with attached event listeners
-projectCreation.addProject(projects, Project);
+projectCreation.addProject(projects);
 projectCreation.displayProjectTasks(tasks);
 
 // Call tasks functions with attached event listeners
