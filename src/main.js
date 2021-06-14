@@ -3,7 +3,7 @@ import { projectCreation } from './projectDom';
 import { taskCreation } from './taskDom';
 
 // Object's arrays
-const projects = [];
+let projects = [];
 
 const tasks = [
   {
@@ -96,3 +96,28 @@ projectCreation.displayProjectTasks(tasks);
 
 // Call tasks functions with attached event listeners
 taskCreation.createNewTask(tasks, Task);
+
+// function to add todos to local storage
+function addToLocalStorage(projects) {
+  // conver the array to string then store it.
+  localStorage.setItem('projects', JSON.stringify(projects));
+  // render them to screen
+  projectCreation.renderProjectView(projects);
+}
+
+// function helps to get everything from local storage
+function getFromLocalStorage() {
+  const reference = localStorage.getItem('projects');
+  // if reference exists
+  if (reference) {
+    // converts back to array and store it in todos array
+    projects = JSON.parse(reference);
+    projectCreation.renderProjectView(projects);
+  }
+}
+
+getFromLocalStorage();
+console.log(projects);
+
+
+export { addToLocalStorage, getFromLocalStorage };
