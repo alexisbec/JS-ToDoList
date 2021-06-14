@@ -1,22 +1,19 @@
-class Project {
-  constructor(title) {
-    this.title = title;
-  }
-}
-
-// Project Form Information
-const PROJECT_FORM = document.forms['project-form'];
-
-// prevent form default behaviour
-PROJECT_FORM.addEventListener('submit', (e) => {
-  e.preventDefault();
-});
-
 // Project Creation Module (IIFE);
 export const projectCreation = (() => {
+  const projectForm = () => {
+    // prevent form default behaviour
+    const PROJECT_FORM = document.forms['project-form'];
+
+    PROJECT_FORM.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
+    return PROJECT_FORM;
+  }
+
   // Project Helper methods
-  const createProject = (projectArr) => {
-    const PROJECT_TITLE = PROJECT_FORM.querySelector('#project-title').value;
+  const createProject = (projectArr, projectForm, Project) => {
+    const PROJECT_TITLE = projectForm().querySelector('#project-title').value;
     if (PROJECT_TITLE === '') {
       return;
     }
@@ -61,6 +58,7 @@ export const projectCreation = (() => {
     TASK_DISPLAY.classList.remove('d-none');
   };
 
+  // Assign color variable to use in DOM
   const getColor = (arr, i) => {
     let color;
     if (arr[i].priority === 'low') {
@@ -150,23 +148,26 @@ export const projectCreation = (() => {
   };
 
   // Create and display project in the UI
-  const addProject = (projectArr) => {
+  const addProject = (projectArr, Project) => {
     const PROJECT_BTN = document.querySelector('#project-btn');
 
     PROJECT_BTN.addEventListener('click', () => {
+      //Prevent default
+      projectForm();
+
       // create new project
-      createProject(projectArr);
+      createProject(projectArr, projectForm, Project);
 
       // Render projects in views
       renderProjectView(projectArr);
 
       // reset project form
-      document.querySelector('#project-form');
+      document.querySelector('#project-form').reset();
     });
   };
 
   // Display the project's specific tasks in the UI
-  const displayProjectTasks = (tasksArr) => {
+  const displayProjectTasks = (tasksArr, getColor) => {
     const PROJECT_LIST = document.querySelector('#project-list');
 
     PROJECT_LIST.addEventListener('click', (e) => {
@@ -176,12 +177,12 @@ export const projectCreation = (() => {
 
       taskOptions(PROJECT_NAME);
 
-      renderTasks(PROJECT_NAME, tasksArr);
+      renderTasks(PROJECT_NAME, tasksArr, getColor);
     });
   };
 
   return {
-    addProject, displayProjectTasks,
+    addProject, displayProjectTasks
   };
 })();
 
