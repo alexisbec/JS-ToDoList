@@ -1,35 +1,65 @@
-import { Task } from "./main";
-
-// Task Creation Module (IIFE);
-export const taskCreation = (() => {
-  // Task Form
-  const taskForm = () => {
-    // Tasks Form Information
-    const TASKS_FORM = document.forms['tasks-form'];
-
-// prevent form default behaviour
-    TASKS_FORM.addEventListener('submit', (e) => {
-      e.preventDefault();
-    });
-
-    return TASKS_FORM;
+export class Task {
+  constructor(title, description, dueDate, priority, project = 'default') {
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+    this.project = project;
   }
 
+  // UI color logic
+  static getColor(arr, i) {
+    let color;
+    if (arr[i].priority === 'low') {
+      color = 'success';
+    } else if (arr[i].priority === 'medium') {
+      color = 'info';
+    } else {
+      color = 'danger';
+    }
+    return color;
+  }
+
+  static buttonColor(color) {
+    let btnEdit;
+    let btnDelete;
+    if (color === 'success' || color === 'info') {
+      btnEdit = 'warning';
+      btnDelete = 'danger';
+    }
+    if (color === 'danger') {
+      btnEdit = 'primary';
+      btnDelete = 'warning';
+    }
+    return [btnEdit, btnDelete];
+  }
+
+  static allTasks(projectArr) {
+    const allProjects = [];
+
+    for (let i = 0; i < projectArr.length; i += 1) {
+      allProjects.push(...projectArr[i].tasks);
+    }
+    return allProjects;
+  }
+
+  // button logic for tasks edit/delete
+
   // Delete Tasks
-  const deleteTask = (tasksArr, projectName, projectArr) => {
+  static deleteTask(tasksArr, projectName, projectArr, renderTasks) {
     const DELETE_BTN = document.querySelectorAll('#delete-btn');
     for (let i = 0; i < DELETE_BTN.length; i += 1) {
       DELETE_BTN[i].addEventListener('click', () => {
         tasksArr.splice(i, 1);
         localStorage.setItem('projects', JSON.stringify(projectArr));
         renderTasks(projectName, tasksArr);
-      })
+      });
     }
   }
 
   // Edit tasks
-  const editTask = (projectTasks, taskProject, projectArr) => {
-    const EDIT_BTN = document.querySelectorAll('#edit-btn')
+  static editTask(projectTasks, taskProject, projectArr, renderTasks) {
+    const EDIT_BTN = document.querySelectorAll('#edit-btn');
 
     for (let i = 0; i < EDIT_BTN.length; i += 1) {
       EDIT_BTN[i].addEventListener('click', () => {
@@ -58,9 +88,25 @@ export const taskCreation = (() => {
 
         localStorage.setItem('projects', JSON.stringify(projectArr));
         renderTasks(taskProject, projectTasks);
-      })
+      });
     }
   }
+}
+
+// Task Creation Module (IIFE);
+export const taskCreation = (() => {
+  // Task Form
+  const taskForm = () => {
+    // Tasks Form Information
+    const TASKS_FORM = document.forms['tasks-form'];
+
+    // prevent form default behaviour
+    TASKS_FORM.addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
+    return TASKS_FORM;
+  };
 
   // Render tasks on the UI
   const renderTasks = (projectName, tasksArr, projectArr) => {
@@ -174,14 +220,12 @@ export const taskCreation = (() => {
         document.querySelector(`#edit-task-name-${i}`).setAttribute('value', tasksArr[i].title);
         document.querySelector(`#edit-task-description-${i}`).setAttribute('value', tasksArr[i].description);
         document.querySelector(`#edit-task-date-${i}`).setAttribute('value', tasksArr[i].dueDate);
-
       }
 
-      editTask(tasksArr, projectName, projectArr);
+      Task.editTask(tasksArr, projectName, projectArr, renderTasks);
 
-      deleteTask(tasksArr, projectName, projectArr);
+      Task.deleteTask(tasksArr, projectName, projectArr, renderTasks);
     }
-
   };
 
   // create task and display it on the UI
@@ -196,7 +240,9 @@ export const taskCreation = (() => {
       const TASK_DATE = TASKS_FORM.querySelector('#task-date').value;
       const TASK_PRIORITY = TASKS_FORM.querySelector('#task-priority').value;
       const TASK_PROJECT = TASKS_FORM.querySelector('#task-project').value;
-      const PROJECT = projectArr.filter(project => project.title === TASK_PROJECT);
+      const PROJECT = projectArr.filter(
+        project => project.title === TASK_PROJECT,
+      );
 
       if (TASK_NAME === '') {
         return;
@@ -212,12 +258,14 @@ export const taskCreation = (() => {
       }
 
       // create new task instance
-      Task.newTask(PROJECT[0].tasks,
+      const newTask = new Task(
         TASK_NAME,
         TASK_DESCRIPTION,
         TASK_DATE,
         TASK_PRIORITY,
-        TASK_PROJECT);
+        TASK_PROJECT,
+      );
+      PROJECT[0].tasks.push(newTask);
 
       localStorage.setItem('projects', JSON.stringify(projectArr));
 
@@ -229,6 +277,8 @@ export const taskCreation = (() => {
   };
 
   return {
-    createNewTask, renderTasks, deleteTask
+    createNewTask, renderTasks,
   };
 })();
+
+export default { taskCreation };
