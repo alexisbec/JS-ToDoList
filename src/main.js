@@ -1,10 +1,8 @@
-import { projectCreation, taskCreation } from './taskDom';
+import { taskCreation } from './taskDom';
+import { projectCreation } from "./projectDom";
 
 // Object's arrays
 let projects = JSON.parse(localStorage.getItem('projects')) || [];
-
-const tasks = JSON.parse(localStorage.getItem('tasks')) ||
-    [];
 
 // Class Constructor
 
@@ -15,7 +13,6 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.project = project;
-    this.exist = true;
   }
 
   // create task object
@@ -23,38 +20,6 @@ export class Task {
     const newTask = new Task(name, description, date, priority, project);
     tasksArr.push(newTask);
   };
-
-  static editTask(projectTasks,taskProject, i, renderTask) {
-    const EDIT_TASK_FORM = document.forms['edit-tasks-form']
-
-    const EDIT_TASK_BTN = document.querySelector(`#edit-btn-${i}`);
-    EDIT_TASK_BTN.addEventListener('click', () => {
-      const EDIT_TASK_NAME = EDIT_TASK_FORM.querySelector(`#edit-task-name-${i}`).value;
-      const EDIT_TASK_DESCRIPTION = EDIT_TASK_FORM.querySelector(`#edit-task-description-${i}`).value;
-      const EDIT_TASK_DATE = EDIT_TASK_FORM.querySelector(`#edit-task-date-${i}`).value;
-      const EDIT_TASK_PRIORITY = EDIT_TASK_FORM.querySelector(`#edit-task-priority-${i}`).value;
-
-      if (EDIT_TASK_NAME === '') {
-        return;
-      }
-      if (EDIT_TASK_DESCRIPTION === '') {
-        return;
-      }
-      if (EDIT_TASK_DATE === '') {
-        return;
-      }
-      if (EDIT_TASK_PRIORITY === '') {
-        return;
-      }
-
-      projectTasks[i].title = EDIT_TASK_NAME;
-      projectTasks[i].description = EDIT_TASK_DESCRIPTION;
-      projectTasks[i].date = EDIT_TASK_DATE;
-      projectTasks[i].priority = EDIT_TASK_PRIORITY;
-
-      renderTask(taskProject, projectTasks)
-    });
-  }
 
   // UI color logic
   static getColor(arr, i) {
@@ -83,11 +48,21 @@ export class Task {
     }
     return [btnEdit, btnDelete];
   };
+
+  static allTasks(projectArr) {
+    const allProjects = [];
+
+    for (let i = 0; i < projectArr.length; i += 1) {
+      allProjects.push(...projectArr[i].tasks);
+    }
+    return allProjects;
+  }
 }
 
 export class Project {
   constructor(title) {
     this.title = title;
+    this.tasks = [];
   }
 
   static newProject(projectTitle, projectArr) {
@@ -96,12 +71,19 @@ export class Project {
   }
 }
 
-// Call of project's function with attached event listeners
-projectCreation.renderProjectView(projects);
-projectCreation.addProject(projects);
-projectCreation.displayProjectTasks(tasks);
+// Execute program
+const runScript = () => {
+  // Call of project's function with attached event listeners
+  projectCreation.renderProjectView(projects);
+  projectCreation.addProject(projects);
+  projectCreation.displayProjectTasks(projects);
 
-// Call tasks functions with attached event listeners
-taskCreation.createNewTask(tasks, Task);
+  // Call tasks functions with attached event listeners
+  taskCreation.createNewTask(projects);
+}
+
+// Execute script
+runScript(projects);
+
 
 
