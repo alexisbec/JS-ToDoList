@@ -1,4 +1,5 @@
-import { taskCreation, Task } from './taskDom';
+import { taskCreation } from './taskDom';
+import { colorLogic } from './logic';
 
 class Project {
   constructor(title) {
@@ -99,7 +100,7 @@ export const projectCreation = (() => {
     PROJECT_LIST.addEventListener('click', (e) => {
       const PROJECT_NAME = e.target.textContent;
       const PROJECT = projectArr.filter(project => project.title === PROJECT_NAME);
-      const allProjects = Task.allTasks(projectArr);
+      const allProjects = colorLogic.allTasks(projectArr);
 
       projectSelection(e, PROJECT_LIST);
 

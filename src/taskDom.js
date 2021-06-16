@@ -1,3 +1,5 @@
+import { colorLogic } from './logic';
+
 export class Task {
   constructor(title, description, dueDate, priority, project = 'default') {
     this.title = title;
@@ -5,42 +7,6 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.project = project;
-  }
-
-  // UI color logic
-  static getColor(arr, i) {
-    let color;
-    if (arr[i].priority === 'low') {
-      color = 'success';
-    } else if (arr[i].priority === 'medium') {
-      color = 'info';
-    } else {
-      color = 'danger';
-    }
-    return color;
-  }
-
-  static buttonColor(color) {
-    let btnEdit;
-    let btnDelete;
-    if (color === 'success' || color === 'info') {
-      btnEdit = 'warning';
-      btnDelete = 'danger';
-    }
-    if (color === 'danger') {
-      btnEdit = 'primary';
-      btnDelete = 'warning';
-    }
-    return [btnEdit, btnDelete];
-  }
-
-  static allTasks(projectArr) {
-    const allProjects = [];
-
-    for (let i = 0; i < projectArr.length; i += 1) {
-      allProjects.push(...projectArr[i].tasks);
-    }
-    return allProjects;
   }
 
   // button logic for tasks edit/delete
@@ -118,10 +84,10 @@ export const taskCreation = (() => {
     if (projectName === 'All Tasks') {
       ADD_TASK_BTN.classList.add('d-none');
       FORM.classList.add('d-none');
-      const allProjects = Task.allTasks(projectArr);
+      const allProjects = colorLogic.allTasks(projectArr);
 
       for (let i = 0; i < allProjects.length; i += 1) {
-        const color = Task.getColor(allProjects, i);
+        const color = colorLogic.getColor(allProjects, i);
         /* eslint max-len: ["error", { "ignoreTemplateLiterals": true }] */
         TASK_LIST.innerHTML += `
             <li class="">
@@ -149,7 +115,7 @@ export const taskCreation = (() => {
 
       TASK_LIST.innerHTML = '';
       for (let i = 0; i < tasksArr.length; i += 1) {
-        const color = Task.getColor(tasksArr, i);
+        const color = colorLogic.getColor(tasksArr, i);
         /* eslint max-len: ["error", { "ignoreTemplateLiterals": true }] */
         TASK_LIST.innerHTML += `
             <li>
@@ -170,11 +136,11 @@ export const taskCreation = (() => {
                         <div class="d-flex mt-3 justify-content-between">
                             <div>
                                 <p>
-                                    <button class="btn btn-${Task.buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
+                                    <button class="btn btn-${colorLogic.buttonColor(color)[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample-${i}" aria-expanded="false" aria-controls="collapseExample-${i}">
                                         Edit
                                     </button>
                                        
-                                    <button id="delete-btn" type="button" class="btn btn-${Task.buttonColor(color)[1]}">Mark as complete</button>
+                                    <button id="delete-btn" type="button" class="btn btn-${colorLogic.buttonColor(color)[1]}">Mark as complete</button>
                                 </p>
                                 
                                 <div class="collapse multi-collapse" id="collapseExample-${i}">
@@ -265,6 +231,7 @@ export const taskCreation = (() => {
         TASK_PRIORITY,
         TASK_PROJECT,
       );
+
       PROJECT[0].tasks.push(newTask);
 
       localStorage.setItem('projects', JSON.stringify(projectArr));
