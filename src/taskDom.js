@@ -187,7 +187,6 @@ export const taskCreation = (() => {
         document.querySelector(`#edit-task-description-${i}`).setAttribute('value', tasksArr[i].description);
         document.querySelector(`#edit-task-date-${i}`).setAttribute('value', tasksArr[i].dueDate);
       }
-
       Task.editTask(tasksArr, projectName, projectArr, renderTasks);
 
       Task.deleteTask(tasksArr, projectName, projectArr, renderTasks);
@@ -208,7 +207,7 @@ export const taskCreation = (() => {
       const TASK_PROJECT = TASKS_FORM.querySelector('#task-project').value;
       const PROJECT = projectArr.filter(
         project => project.title === TASK_PROJECT,
-      );
+      ); // [{Title, tasks}] == PROJECT[0].tasks
 
       if (TASK_NAME === '') {
         return;
@@ -234,7 +233,7 @@ export const taskCreation = (() => {
 
       PROJECT[0].tasks.push(newTask);
 
-      localStorage.setItem('projects', JSON.stringify(projectArr));
+      //localStorage.setItem('projects', JSON.stringify(projectArr));
 
       taskForm();
 

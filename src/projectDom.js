@@ -1,7 +1,7 @@
 import { taskCreation } from './taskDom';
 import { colorLogic } from './logic';
 
-class Project {
+export class Project {
   constructor(title) {
     this.title = title;
     this.tasks = [];
@@ -18,30 +18,30 @@ export const projectCreation = (() => {
   const projectForm = () => {
     // prevent form default behaviour
     const PROJECT_FORM = document.forms['project-form'];
-
     PROJECT_FORM.addEventListener('submit', (e) => {
       e.preventDefault();
     });
-
-    return PROJECT_FORM;
   };
 
   // Project Helper methods
-  const createProject = (projectArr, projectForm) => {
-    const PROJECT_TITLE = projectForm().querySelector('#project-title').value;
+  const createProject = (projectArr) => {
+    const PROJECT_FORM = document.forms['project-form'];
+    const PROJECT_TITLE = PROJECT_FORM.querySelector('#project-title').value;
     if (PROJECT_TITLE === '') {
       return;
     }
 
     Project.newProject(PROJECT_TITLE, projectArr);
 
-    localStorage.setItem('projects', JSON.stringify(projectArr));
+    //localStorage.setItem('projects', JSON.stringify(projectArr));
+
+    return true;
   };
 
   const renderProjectView = (projectArr) => {
     const PROJECT_LIST = document.querySelector('#project-list');
     PROJECT_LIST.innerHTML = `
-            <li class="list-group-item list-group-item-dark btn my-1" id="all-projects">All Tasks</li>
+            <li id="all-projects" class="list-group-item list-group-item-dark active btn my-1">All Tasks</li>
         `;
 
     for (let i = 0; i < projectArr.length; i += 1) {
@@ -83,7 +83,7 @@ export const projectCreation = (() => {
       projectForm();
 
       // create new project
-      createProject(projectArr, projectForm);
+      createProject(projectArr);
 
       // Render projects in views
       renderProjectView(projectArr);
@@ -115,7 +115,7 @@ export const projectCreation = (() => {
   };
 
   return {
-    addProject, displayProjectTasks, renderProjectView,
+    createProject, taskOptions, addProject, displayProjectTasks, renderProjectView,
   };
 })();
 

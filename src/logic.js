@@ -35,6 +35,7 @@ export const colorLogic = (() => {
     }
     return allProjects;
   };
+
   return { getColor, buttonColor, allTasks };
 })();
 

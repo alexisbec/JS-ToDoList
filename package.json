@@ -8,7 +8,8 @@
     "build": "webpack --mode production",
     "watch": "webpack --watch",
     "qa": "webpack --mode qa",
-    "start": "webpack serve --mode development --open"
+    "start": "webpack serve --mode development --open",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,15 @@
   },
   "homepage": "https://github.com/alexisbec/JS-ToDoList#readme",
   "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.0.5",
     "css-loader": "^5.2.6",
     "eslint": "^7.28.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
+    "jest": "^27.0.5",
     "style-loader": "^2.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^21.0.0",
@@ -34,5 +39,8 @@
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "jsdom": "^16.6.0"
   }
 }
