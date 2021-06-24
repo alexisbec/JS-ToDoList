@@ -1,20 +1,20 @@
-import { Project, projectCreation } from "../src/projectDom";
 import { JSDOM } from 'jsdom';
+import { Project, projectCreation } from '../src/projectDom';
 
-it('should create a new project object', function () {
-    const newProject = new Project('Test Project', []);
-    expect(newProject.title).toBe('Test Project');
+it('should create a new project object', () => {
+  const newProject = new Project('Test Project', []);
+  expect(newProject.title).toBe('Test Project');
 });
 
-it('should add a new project instance to the projects array', function () {
-    const projects = [];
-    const newProj = new Project('Test Project', []);
-    Project.newProject(newProj.title, projects);
-    expect(projects).toEqual([{title: 'Test Project', tasks: []}]);
+it('should add a new project instance to the projects array', () => {
+  const projects = [];
+  const newProj = new Project('Test Project', []);
+  Project.newProject(newProj.title, projects);
+  expect(projects).toEqual([{ title: 'Test Project', tasks: [] }]);
 });
 
-it('should create a project instance object from the UI', function () {
-    const { window } = new JSDOM(`
+it('should create a project instance object from the UI', () => {
+  const { window } = new JSDOM(`
         <form id="project-form">
             <div class="mb-3">
                 <label for="project-title" class="form-label text-info">Project's Title</label>
@@ -25,54 +25,50 @@ it('should create a project instance object from the UI', function () {
         </form>
 `);
 
-    global.document = window.document;
-    global.window = window;
+  global.document = window.document;
+  global.window = window;
 
-    const projects = [];
+  const projects = [];
 
-    projectCreation.createProject(projects);
+  projectCreation.createProject(projects);
 
-    expect(projects[0].title).toBe('Project 1');
+  expect(projects[0].title).toBe('Project 1');
 });
 
-it('should insert the created project in the UI', function () {
-    const { window } = new JSDOM(`
+it('should insert the created project in the UI', () => {
+  const { window } = new JSDOM(`
         <ul id="project-list" class="list-group pt-4 bg-dark">
         </ul>
     `);
 
-    global.document = window.document;
-    global.window = window;
+  global.document = window.document;
+  global.window = window;
 
-    const projects = [];
+  const projects = [];
 
-    projectCreation.renderProjectView(projects);
+  projectCreation.renderProjectView(projects);
 
-    const list = document.querySelector('#project-list');
+  const list = document.querySelector('#project-list');
 
-    expect(list.innerHTML).toBe('\n' +
-        '            <li id="all-projects" class="list-group-item list-group-item-dark active btn my-1">All Tasks</li>\n' +
-        '        ')
+  expect(list.innerHTML).toBe('\n'
+        + '            <li id="all-projects" class="list-group-item list-group-item-dark active btn my-1">All Tasks</li>\n'
+        + '        ');
 });
 
-it('Should create the selection on tasks based on project', function () {
-    const { window } = new JSDOM(`
+it('Should create the selection on tasks based on project', () => {
+  const { window } = new JSDOM(`
         <div class="mb-3" id="project">
         </div>
     `);
 
-    global.document = window.document;
-    global.window = window;
+  global.document = window.document;
+  global.window = window;
 
-    projectCreation.taskOptions('Project 1');
+  projectCreation.taskOptions('Project 1');
 
-    const projectOption = document.querySelector('#project');
+  const projectOption = document.querySelector('#project');
 
-    expect(projectOption.innerHTML).toBe('\n' +
-        '        <input type="hidden" value="Project 1" id="task-project" class="form-control" aria-label="Default select example">\n' +
-        '    ');
+  expect(projectOption.innerHTML).toBe('\n'
+        + '        <input type="hidden" value="Project 1" id="task-project" class="form-control" aria-label="Default select example">\n'
+        + '    ');
 });
-
-
-
-

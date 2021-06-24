@@ -33,9 +33,7 @@ export const projectCreation = (() => {
 
     Project.newProject(PROJECT_TITLE, projectArr);
 
-    //localStorage.setItem('projects', JSON.stringify(projectArr));
-
-    return true;
+    // localStorage.setItem('projects', JSON.stringify(projectArr));
   };
 
   const renderProjectView = (projectArr) => {

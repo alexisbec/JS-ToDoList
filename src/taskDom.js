@@ -233,7 +233,7 @@ export const taskCreation = (() => {
 
       PROJECT[0].tasks.push(newTask);
 
-      //localStorage.setItem('projects', JSON.stringify(projectArr));
+      // localStorage.setItem('projects', JSON.stringify(projectArr));
 
       taskForm();
 
